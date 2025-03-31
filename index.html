@@ -65,10 +65,7 @@
         <label>📌 தலைப்பு:</label>
         <input type="text" id="title" placeholder="தலைப்பை உள்ளிடவும்">
 
-        <label>📸 புகைப்படம் (Upload to Server Manually):</label>
-        <input type="file" id="image" accept="image/*">
-
-        <label>📝 புகைப்பட பெயர் (Filename with Extension - Eg: product.jpg):</label>
+        <label>📸 புகைப்பட பெயர் (Filename with Extension - Eg: product.jpg):</label>
         <input type="text" id="imageName" placeholder="Enter image name with extension">
 
         <label>📞 WhatsApp Number:</label>
@@ -95,7 +92,7 @@
                     localStorage.setItem("whatsappNumber", document.getElementById("whatsappNumber").value);
                     localStorage.setItem("whatsappText", document.getElementById("whatsappText").value);
                     localStorage.setItem("description", document.getElementById("description").value);
-                    localStorage.setItem("imageName", document.getElementById("imageName").value); // Save Filename
+                    localStorage.setItem("imageName", document.getElementById("imageName").value || "Calories.jpg"); // Default Image
 
                     document.getElementById("status").textContent = "✅ Finish!";
                 } catch (e) {
