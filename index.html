@@ -5,102 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; text-align: center; }
         .container {
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
+            margin: 50px auto;
         }
-        h2 { color: #333; }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            text-align: left;
-        }
-        input, textarea {
+        input, button {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin: 5px 0;
             font-size: 16px;
         }
         button {
-            width: 100%;
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 18px;
             cursor: pointer;
-            margin-top: 15px;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
         }
         #status {
-            font-size: 18px;
+            margin-top: 10px;
+            font-size: 16px;
             font-weight: bold;
-            margin-top: 15px;
-            color: green;
+            color: #007bff;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h2>Admin Panel</h2>
+        <h1>Admin Panel</h1>
+        
+        <label>Title:</label>
+        <input type="text" id="title" placeholder="Enter title">
 
-        <label>📌 தலைப்பு:</label>
-        <input type="text" id="title" placeholder="தலைப்பை உள்ளிடவும்">
+        <label>Description:</label>
+        <input type="text" id="description" placeholder="Enter description">
 
-        <label>📸 புகைப்பட பெயர் (Filename with Extension - Eg: product.jpg):</label>
-        <input type="text" id="imageName" placeholder="Enter image name with extension">
+        <label>WhatsApp Number:</label>
+        <input type="text" id="whatsappNumber" placeholder="Enter WhatsApp Number">
 
-        <label>📞 WhatsApp Number:</label>
-        <input type="text" id="whatsappNumber" placeholder="WhatsApp Number">
+        <label>WhatsApp Message:</label>
+        <input type="text" id="whatsappText" placeholder="Enter WhatsApp Message">
 
-        <label>💬 WhatsApp Message:</label>
-        <input type="text" id="whatsappText" placeholder="Message to send">
+        <label>Image URL (Instagram, Direct Image Link)</label>
+        <input type="text" id="imageUrl" placeholder="Paste image URL">
 
-        <label>📝 விளக்கம்:</label>
-        <textarea id="description" placeholder="விளக்கத்தை உள்ளிடவும்"></textarea>
-
-        <button onclick="updateData()">🔄 Update</button>
-
-        <p id="status"></p>
+        <button onclick="saveData()">Update</button>
+        
+        <p id="status">Waiting for update...</p>
     </div>
 
     <script>
-        function updateData() {
-            document.getElementById("status").textContent = "⌛ Processing..."; 
+        function saveData() {
+            document.getElementById("status").innerText = "Processing...";
 
-            setTimeout(() => { 
-                try {
-                    localStorage.setItem("title", document.getElementById("title").value);
-                    localStorage.setItem("whatsappNumber", document.getElementById("whatsappNumber").value);
-                    localStorage.setItem("whatsappText", document.getElementById("whatsappText").value);
-                    localStorage.setItem("description", document.getElementById("description").value);
-                    localStorage.setItem("imageName", document.getElementById("imageName").value || "Calories.jpg"); // Default Image
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const whatsappNumber = document.getElementById("whatsappNumber").value;
+            const whatsappText = document.getElementById("whatsappText").value;
+            const imageUrl = document.getElementById("imageUrl").value;
 
-                    document.getElementById("status").textContent = "✅ Finish!";
-                } catch (e) {
-                    document.getElementById("status").textContent = "❌ Error!";
-                }
-            }, 2000);
+            localStorage.setItem("title", title);
+            localStorage.setItem("description", description);
+            localStorage.setItem("whatsappNumber", whatsappNumber);
+            localStorage.setItem("whatsappText", whatsappText);
+            localStorage.setItem("imageUrl", imageUrl);
+
+            setTimeout(() => {
+                document.getElementById("status").innerText = "Finished!";
+            }, 1000);
         }
     </script>
-
 </body>
 </html>
