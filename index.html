@@ -3,77 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Page</title>
+    <title>Admin Panel</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; text-align: center; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
         .container {
             width: 90%;
-            max-width: 400px;
+            max-width: 500px;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin: 50px auto;
+            margin: 20px auto;
         }
-        h1 { color: #333; font-size: 24px; }
-        img {
+        h2 { color: #333; }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+        }
+        input, textarea {
             width: 100%;
-            max-width: 300px;
-            height: auto;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            margin: 10px 0;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
         }
-        .whatsapp-button {
-            display: inline-block;
-            padding: 12px 20px;
-            background-color: #25d366;
+        button {
+            width: 100%;
+            background-color: #28a745;
             color: white;
-            text-decoration: none;
+            border: none;
+            padding: 15px;
             border-radius: 5px;
             font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #status {
+            font-size: 18px;
             font-weight: bold;
-            transition: 0.3s;
-        }
-        .whatsapp-button:hover {
-            background-color: #1ebe57;
-        }
-        .description {
-            color: #555;
-            font-size: 16px;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 400px;
-            text-align: justify;
+            margin-top: 15px;
+            color: green;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1 id="title">Loading...</h1>
-        <img id="productImage" src="" alt="Product Image">
-        <a id="whatsappButton" class="whatsapp-button" href="#" target="_blank">
-            WhatsApp Order
-        </a>
+        <h2>Admin Panel</h2>
+
+        <label>📌 தலைப்பு:</label>
+        <input type="text" id="title" placeholder="தலைப்பை உள்ளிடவும்">
+
+        <label>📸 புகைப்படம் (Upload to Server Manually):</label>
+        <input type="file" id="image" accept="image/*">
+
+        <label>📝 புகைப்பட பெயர் (Filename with Extension - Eg: product.jpg):</label>
+        <input type="text" id="imageName" placeholder="Enter image name with extension">
+
+        <label>📞 WhatsApp Number:</label>
+        <input type="text" id="whatsappNumber" placeholder="WhatsApp Number">
+
+        <label>💬 WhatsApp Message:</label>
+        <input type="text" id="whatsappText" placeholder="Message to send">
+
+        <label>📝 விளக்கம்:</label>
+        <textarea id="description" placeholder="விளக்கத்தை உள்ளிடவும்"></textarea>
+
+        <button onclick="updateData()">🔄 Update</button>
+
+        <p id="status"></p>
     </div>
 
-    <p id="description" class="description">Loading description...</p>
-
     <script>
-        function loadData() {
-            const title = localStorage.getItem("title") || "எங்கள் தயாரிப்பு";
-            const description = localStorage.getItem("description") || "இதன் சிறப்பு அம்சங்கள் விரைவில்.";
-            const imageName = localStorage.getItem("imageName") || "default.jpg"; // Load Filename
-            const whatsappText = localStorage.getItem("whatsappText") || "Sir Order Please";
-            const whatsappNumber = localStorage.getItem("whatsappNumber") || "9344165879";
+        function updateData() {
+            document.getElementById("status").textContent = "⌛ Processing..."; 
 
-            document.getElementById("title").innerText = title;
-            document.getElementById("description").innerText = description;
-            document.getElementById("productImage").src = "uploads/" + imageName; // Load from Server
-            document.getElementById("whatsappButton").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`;
+            setTimeout(() => { 
+                try {
+                    localStorage.setItem("title", document.getElementById("title").value);
+                    localStorage.setItem("whatsappNumber", document.getElementById("whatsappNumber").value);
+                    localStorage.setItem("whatsappText", document.getElementById("whatsappText").value);
+                    localStorage.setItem("description", document.getElementById("description").value);
+                    localStorage.setItem("imageName", document.getElementById("imageName").value); // Save Filename
+
+                    document.getElementById("status").textContent = "✅ Finish!";
+                } catch (e) {
+                    document.getElementById("status").textContent = "❌ Error!";
+                }
+            }, 2000);
         }
-
-        document.addEventListener("DOMContentLoaded", loadData);
     </script>
+
 </body>
 </html>
