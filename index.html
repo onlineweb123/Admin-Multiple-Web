@@ -3,49 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Customer Page</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        input, textarea, button { display: block; width: 80%; margin: 10px auto; padding: 10px; }
-        #status { font-size: 18px; font-weight: bold; color: green; }
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; text-align: center; }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+        }
+        h1 { color: #333; font-size: 24px; }
+        img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+        .whatsapp-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ebe57;
+        }
+        .description {
+            color: #555;
+            font-size: 16px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+            text-align: justify;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1 id="title">Loading...</h1>
+        <img id="productImage" src="" alt="Product Image">
+        <a id="whatsappButton" class="whatsapp-button" href="#" target="_blank">
+            WhatsApp Order
+        </a>
+    </div>
 
-    <h2>Admin Panel</h2>
-
-    <label>தலைப்பு:</label>
-    <input type="text" id="title">
-
-    <label>புகைப்படம்:</label>
-    <input type="file" id="image">
-
-    <label>WhatsApp Number:</label>
-    <input type="text" id="whatsapp">
-
-    <label>WhatsApp Message:</label>
-    <input type="text" id="whatsappMsg">
-
-    <label>விளக்கம்:</label>
-    <textarea id="description"></textarea>
-
-    <button onclick="updateData()">Update</button>
-
-    <p id="status"></p>
+    <p id="description" class="description">Loading description...</p>
 
     <script>
-        function updateData() {
-            document.getElementById("status").textContent = "Processing..."; // Process Message
+        function loadData() {
+            const title = localStorage.getItem("title") || "எங்கள் தயாரிப்பு";
+            const description = localStorage.getItem("description") || "இதன் சிறப்பு அம்சங்கள் விரைவில்.";
+            const imageName = localStorage.getItem("imageName") || "default.jpg"; // Load Filename
+            const whatsappText = localStorage.getItem("whatsappText") || "Sir Order Please";
+            const whatsappNumber = localStorage.getItem("whatsappNumber") || "9344165879";
 
-            setTimeout(() => { 
-                document.getElementById("status").textContent = "Finish! ✅"; // Finish Message
-                localStorage.setItem("title", document.getElementById("title").value);
-                localStorage.setItem("whatsapp", document.getElementById("whatsapp").value);
-                localStorage.setItem("whatsappMsg", document.getElementById("whatsappMsg").value);
-                localStorage.setItem("description", document.getElementById("description").value);
-            }, 2000); // 2 Sec Delay
+            document.getElementById("title").innerText = title;
+            document.getElementById("description").innerText = description;
+            document.getElementById("productImage").src = "uploads/" + imageName; // Load from Server
+            document.getElementById("whatsappButton").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`;
         }
-    </script>
 
+        document.addEventListener("DOMContentLoaded", loadData);
+    </script>
 </body>
 </html>
